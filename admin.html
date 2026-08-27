@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
+  <title>Admin PRO · El Patrón</title>
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
+
+  <style>
+
+    body {
+      background:#eef0f3;
+    }
+
+    .admin-main {
+      max-width:1100px;
+      margin:auto;
+      padding:20px 14px;
+    }
+
+    .admin-panel {
+      background:white;
+      border-radius:20px;
+      padding:20px;
+      margin-bottom:16px;
+      box-shadow:0 5px 20px #0000000a;
+    }
+
+    .login-box {
+      max-width:430px;
+      margin:70px auto;
+    }
+
+    .admin-input {
+      width:100%;
+      padding:12px;
+      border:1px solid #ddd;
+      border-radius:10px;
+      margin:7px 0 12px;
+    }
+
+    .admin-btn {
+      border:0;
+      background:#222;
+      color:white;
+      padding:11px 15px;
+      border-radius:11px;
+      font-weight:850;
+      cursor:pointer;
+    }
+
+    .admin-btn.yellow {
+      background:#ffe600;
+      color:#222;
+    }
+
+    .admin-btn.red {
+      background:#ffe7e7;
+      color:#b42318;
+    }
+
+    .hidden {
+      display:none!important;
+    }
+
+    .stats {
+      display:grid;
+      grid-template-columns:
+        repeat(4,1fr);
+      gap:12px;
+    }
+
+    .stat {
+      background:white;
+      padding:18px;
+      border-radius:18px;
+      box-shadow:0 4px 15px #0000000a;
+    }
+
+    .stat small {
+      color:#777;
+    }
+
+    .stat strong {
+      display:block;
+      font-size:28px;
+      margin-top:5px;
+    }
+
+    .panel-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:15px;
+    }
+
+    .panel-header h2 {
+      margin:0;
+      font-size:18px;
+    }
+
+    .admin-row {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:13px 0;
+      border-bottom:1px solid #eee;
+    }
+
+    .admin-row:last-child {
+      border-bottom:0;
+    }
+
+    .admin-grow {
+      flex:1;
+    }
+
+    .admin-grow strong {
+      display:block;
+      font-size:13px;
+    }
+
+    .admin-grow small {
+      color:#777;
+    }
+
+    .admin-actions {
+      display:flex;
+      gap:6px;
+    }
+
+    .admin-actions button {
+      border:0;
+      padding:8px 10px;
+      border-radius:9px;
+      cursor:pointer;
+    }
+
+    .chart {
+      height:320px;
+    }
+
+    .modal {
+      position:fixed;
+      inset:0;
+      z-index:999;
+      display:grid;
+      place-items:center;
+      padding:15px;
+      background:#0008;
+    }
+
+    .modal-box {
+      width:min(650px,100%);
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:20px;
+      position:relative;
+    }
+
+    .modal-close {
+      position:absolute;
+      right:14px;
+      top:12px;
+      border:0;
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      cursor:pointer;
+      font-size:20px;
+    }
+
+    .form-label {
+      display:block;
+      margin:12px 0;
+      font-size:12px;
+      font-weight:850;
+    }
+
+    .form-label input,
+    .form-label select {
+      display:block;
+      width:100%;
+      padding:11px;
+      margin-top:6px;
+      border:1px solid #ddd;
+      border-radius:10px;
+    }
+
+    @media(max-width:700px) {
+
+      .stats {
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+      .admin-row {
+        align-items:flex-start;
+      }
+
+      .admin-actions {
+        flex-direction:column;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+  <div class="brand">
+
+    <div class="brand-icon">
+      ⚡
+    </div>
+
+    <div>
+
+      <strong>
+        ADMIN PRO
+      </strong>
+
+      <span>
+        EL PATRÓN
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <button
+    id="logoutBtn"
+    class="admin-btn hidden">
+
+    Cerrar sesión
+
+  </button>
+
+</header>
+
+
+
+<main class="admin-main">
+
+
+<!-- LOGIN -->
+
+<section
+  id="loginBox"
+  class="admin-panel login-box">
+
+  <h2>
+    🔐 Administrador
+  </h2>
+
+  <p>
+    Ingresa con tu cuenta autorizada.
+  </p>
+
+
+  <input
+    id="email"
+    class="admin-input"
+    type="email"
+    placeholder="Correo"
+  >
+
+
+  <input
+    id="password"
+    class="admin-input"
+    type="password"
+    placeholder="Contraseña"
+  >
+
+
+  <button
+    id="loginBtn"
+    class="admin-btn yellow"
+    style="width:100%">
+
+    ENTRAR
+
+  </button>
+
+
+  <p
+    id="loginError"
+    style="color:#c62828">
+  </p>
+
+</section>
+
+
+
+<!-- DASHBOARD -->
+
+<div
+  id="dashboard"
+  class="hidden">
+
+
+<!-- ESTADÍSTICAS -->
+
+<section class="stats">
+
+  <div class="stat">
+
+    <small>
+      👥 Personas hoy
+    </small>
+
+    <strong id="todayUsers">
+      0
+    </strong>
+
+  </div>
+
+
+  <div class="stat">
+
+    <small>
+      🎟️ Copias hoy
+    </small>
+
+    <strong id="todayCopies">
+      0
+    </strong>
+
+  </div>
+
+
+  <div class="stat">
+
+    <small>
+      🏆 Más copiado
+    </small>
+
+    <strong id="topCoupon">
+      —
+    </strong>
+
+  </div>
+
+
+  <div class="stat">
+
+    <small>
+      📊 Total copias
+    </small>
+
+    <strong id="totalCopies">
+      0
+    </strong>
+
+  </div>
+
+</section>
+
+
+
+<!-- GRÁFICA -->
+
+<section class="admin-panel">
+
+  <div class="panel-header">
+
+    <h2>
+      📈 Días con más clics
+    </h2>
+
+  </div>
+
+
+  <div class="chart">
+
+    <canvas
+      id="clickChart">
+    </canvas>
+
+  </div>
+
+</section>
+
+
+
+<!-- CUPONES -->
+
+<section class="admin-panel">
+
+  <div class="panel-header">
+
+    <h2>
+      🎟️ Cupones
+    </h2>
+
+    <button
+      id="newCoupon"
+      class="admin-btn yellow">
+
+      + NUEVO
+
+    </button>
+
+  </div>
+
+
+  <div
+    id="couponList">
+  </div>
+
+</section>
+
+
+
+<!-- OFERTAS -->
+
+<section class="admin-panel">
+
+  <div class="panel-header">
+
+    <h2>
+      🔥 Ofertas
+    </h2>
+
+    <button
+      id="newOffer"
+      class="admin-btn yellow">
+
+      + NUEVA
+
+    </button>
+
+  </div>
+
+
+  <div
+    id="offerList">
+  </div>
+
+</section>
+
+
+
+<!-- CATEGORÍAS -->
+
+<section class="admin-panel">
+
+  <div class="panel-header">
+
+    <h2>
+      📂 Categorías
+    </h2>
+
+    <button
+      id="newCategory"
+      class="admin-btn yellow">
+
+      + NUEVA
+
+    </button>
+
+  </div>
+
+
+  <div
+    id="categoryList">
+  </div>
+
+</section>
+
+
+
+<!-- MERCADO PAGO -->
+
+<section class="admin-panel">
+
+  <h2>
+    💳 Mercado Pago
+  </h2>
+
+
+  <label class="form-label">
+
+    Texto
+
+    <input
+      id="mpText"
+      placeholder="$100 GRATIS"
+    >
+
+  </label>
+
+
+  <label class="form-label">
+
+    Enlace
+
+    <input
+      id="mpLink"
+      placeholder="Enlace de Mercado Pago"
+    >
+
+  </label>
+
+
+  <button
+    id="saveMP"
+    class="admin-btn yellow">
+
+    GUARDAR
+
+  </button>
+
+</section>
+
+
+</div>
+
+</main>
+
+
+
+<!-- MODAL -->
+
+<div
+  id="modal"
+  class="modal hidden">
+
+  <div class="modal-box">
+
+    <button
+      id="closeModal"
+      class="modal-close">
+
+      ×
+
+    </button>
+
+
+    <h2 id="modalTitle">
+      Editar
+    </h2>
+
+
+    <form
+      id="editForm">
+    </form>
+
+  </div>
+
+</div>
+
+
+
+<div
+  id="toast"
+  class="toast">
+</div>
+
+
+
+<script
+  src="https://cdn.jsdelivr.net/npm/chart.js">
+</script>
+
+
+<script
+  type="module"
+  src="admin.js">
+</script>
+
+
+</body>
+</html>

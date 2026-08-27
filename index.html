@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>⚡ El Patrón de los Cupones</title>
+
+  <meta name="theme-color" content="#ffe600">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <div class="brand">
+
+    <div class="brand-icon">⚡</div>
+
+    <div>
+      <strong>EL PATRÓN</strong>
+      <span>DE LOS CUPONES</span>
+    </div>
+
+  </div>
+
+  <button id="refreshBtn" class="refresh-btn">
+    ↻
+  </button>
+
+</header>
+
+
+<main>
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <span class="hero-small">
+        🔥 CUPONES Y OFERTAS
+      </span>
+
+      <h1>
+        Compra menos,<br>
+        <span>aprovecha más.</span>
+      </h1>
+
+      <p>
+        Encuentra cupones y ofertas de Mercado Libre.
+        Copia tu cupón y aprovecha la promoción.
+      </p>
+
+    </div>
+
+    <div class="hero-icon">
+      ⚡
+    </div>
+
+  </section>
+
+
+  <!-- CATEGORÍAS -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <h2>📂 Categorías</h2>
+
+      <span>
+        Desliza →
+      </span>
+
+    </div>
+
+    <div
+      id="categories"
+      class="horizontal-scroll categories-scroll">
+    </div>
+
+  </section>
+
+
+  <!-- MERCADO PAGO -->
+
+  <section class="mercado-pago-card">
+
+    <div class="mp-logo">
+      MP
+    </div>
+
+    <div class="mp-content">
+
+      <small>
+        💙 PROMOCIÓN EXCLUSIVA
+      </small>
+
+      <h2 id="mpTitle">
+        $100 GRATIS
+      </h2>
+
+      <p>
+        Para usuarios nuevos de Mercado Pago
+      </p>
+
+    </div>
+
+    <a
+      id="mpButton"
+      href="#"
+      target="_blank"
+      class="mp-button">
+
+      VER PROMO
+
+    </a>
+
+  </section>
+
+
+  <!-- OFERTAS -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <h2>
+        🔥 Ofertas de Mercado Libre
+      </h2>
+
+      <span>
+        Desliza →
+      </span>
+
+    </div>
+
+    <div
+      id="offers"
+      class="horizontal-scroll offers-scroll">
+    </div>
+
+  </section>
+
+
+  <!-- CUPONES -->
+
+  <section class="section coupons-section">
+
+    <div class="section-title">
+
+      <h2>
+        🎟️ Cupones
+      </h2>
+
+      <span>
+        Desliza →
+      </span>
+
+    </div>
+
+
+    <div class="coupon-tabs">
+
+      <button
+        class="coupon-tab active"
+        data-category="relampagos">
+
+        ⚡ Relámpagos
+
+      </button>
+
+      <button
+        class="coupon-tab"
+        data-category="exclusivos">
+
+        💎 Exclusivos
+
+      </button>
+
+      <button
+        class="coupon-tab"
+        data-category="bancarios">
+
+        🏦 Bancarios
+
+      </button>
+
+    </div>
+
+
+    <div
+      id="coupons"
+      class="horizontal-scroll coupons-scroll">
+    </div>
+
+  </section>
+
+</main>
+
+
+<div
+  id="toast"
+  class="toast">
+</div>
+
+
+<footer>
+
+  ⚡ El Patrón de los Cupones
+
+</footer>
+
+
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
